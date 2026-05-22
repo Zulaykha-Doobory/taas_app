@@ -1,0 +1,11 @@
+test_name,category,url,action,locator_type,locator_value,input_value,expected
+Valid login,happy_path,/login,navigate,,,,
+Valid login,happy_path,,fill,id,username,tomsmith,
+Valid login,happy_path,,fill,id,password,SuperSecretPassword!,
+Valid login,happy_path,,click,css,button[type=submit],,
+Valid login,happy_path,,assert_text,css,.flash.success,,You logged into a secure area
+Wrong password,negative,/login,navigate,,,,
+Wrong password,negative,,fill,id,username,tomsmith,
+Wrong password,negative,,fill,id,password,wrongpass,
+Wrong password,negative,,click,css,button[type=submit],,
+Wrong password,negative,,assert_text,css,.flash.error,,Your password is invalid

@@ -1,0 +1,297 @@
+{
+  "suite_name": "Password Reset & Auth",
+  "base_url": "https://demo-app.local",
+  "cases": [
+    {
+      "name": "Story happy path - User can reset password via email link",
+      "category": "happy_path",
+      "source": "story:PROJ-123",
+      "tags": [
+        "story",
+        "happy_path"
+      ],
+      "steps": [
+        {
+          "action": "navigate",
+          "locator": null,
+          "value": "/",
+          "description": "Open app for: User can reset password via email link",
+          "timeout": 10
+        },
+        {
+          "action": "fill",
+          "locator": {
+            "strategy": "name",
+            "value": "email"
+          },
+          "value": "sample_value",
+          "description": "AC: User can enter their email address",
+          "timeout": 10
+        },
+        {
+          "action": "click",
+          "locator": {
+            "strategy": "css",
+            "value": "button[type=submit]"
+          },
+          "value": null,
+          "description": "AC: User can click the reset button",
+          "timeout": 10
+        },
+        {
+          "action": "assert_text",
+          "locator": {
+            "strategy": "css",
+            "value": "body"
+          },
+          "value": "a confirmation message: Reset link sent",
+          "description": "AC (verify): User should see a confirmation message: Reset link sent",
+          "timeout": 10
+        },
+        {
+          "action": "screenshot",
+          "locator": null,
+          "value": null,
+          "description": "Capture final state",
+          "timeout": 10
+        }
+      ]
+    },
+    {
+      "name": "Story happy path - Login with valid creds",
+      "category": "happy_path",
+      "source": "story:CSV-1",
+      "tags": [
+        "story",
+        "happy_path"
+      ],
+      "steps": [
+        {
+          "action": "navigate",
+          "locator": null,
+          "value": "/",
+          "description": "Open app for: Login with valid creds",
+          "timeout": 10
+        },
+        {
+          "action": "fill",
+          "locator": {
+            "strategy": "name",
+            "value": "email"
+          },
+          "value": "sample_value",
+          "description": "AC: User can enter email",
+          "timeout": 10
+        },
+        {
+          "action": "fill",
+          "locator": {
+            "strategy": "name",
+            "value": "password"
+          },
+          "value": "sample_value",
+          "description": "AC: User can enter password",
+          "timeout": 10
+        },
+        {
+          "action": "click",
+          "locator": {
+            "strategy": "css",
+            "value": "button[type=submit]"
+          },
+          "value": null,
+          "description": "AC: User can click submit",
+          "timeout": 10
+        },
+        {
+          "action": "assert_text",
+          "locator": {
+            "strategy": "css",
+            "value": "body"
+          },
+          "value": "Dashboard",
+          "description": "AC (verify): User should see Dashboard",
+          "timeout": 10
+        },
+        {
+          "action": "screenshot",
+          "locator": null,
+          "value": null,
+          "description": "Capture final state",
+          "timeout": 10
+        }
+      ]
+    },
+    {
+      "name": "Edge - empty fields on LoginForm",
+      "category": "edge_case",
+      "source": "code:LoginForm",
+      "tags": [
+        "code",
+        "edge"
+      ],
+      "steps": [
+        {
+          "action": "navigate",
+          "locator": null,
+          "value": "/",
+          "description": "Open component",
+          "timeout": 10
+        },
+        {
+          "action": "fill",
+          "locator": {
+            "strategy": "name",
+            "value": "email"
+          },
+          "value": "",
+          "description": "Edge: leave 'email' empty",
+          "timeout": 10
+        },
+        {
+          "action": "fill",
+          "locator": {
+            "strategy": "name",
+            "value": "password"
+          },
+          "value": "",
+          "description": "Edge: leave 'password' empty",
+          "timeout": 10
+        },
+        {
+          "action": "click",
+          "locator": {
+            "strategy": "css",
+            "value": "button[type=submit]"
+          },
+          "value": null,
+          "description": "Submit with empty fields",
+          "timeout": 10
+        },
+        {
+          "action": "assert_visible",
+          "locator": {
+            "strategy": "css",
+            "value": ".error, [role=alert]"
+          },
+          "value": null,
+          "description": "Expect validation error",
+          "timeout": 10
+        }
+      ]
+    },
+    {
+      "name": "Negative - invalid input on LoginForm",
+      "category": "negative",
+      "source": "code:LoginForm",
+      "tags": [
+        "code",
+        "negative"
+      ],
+      "steps": [
+        {
+          "action": "navigate",
+          "locator": null,
+          "value": "/",
+          "description": null,
+          "timeout": 10
+        },
+        {
+          "action": "fill",
+          "locator": {
+            "strategy": "name",
+            "value": "email"
+          },
+          "value": "invalid!!!",
+          "description": "Negative: invalid data in 'email'",
+          "timeout": 10
+        },
+        {
+          "action": "fill",
+          "locator": {
+            "strategy": "name",
+            "value": "password"
+          },
+          "value": "invalid!!!",
+          "description": "Negative: invalid data in 'password'",
+          "timeout": 10
+        },
+        {
+          "action": "click",
+          "locator": {
+            "strategy": "css",
+            "value": "button[type=submit]"
+          },
+          "value": null,
+          "description": null,
+          "timeout": 10
+        },
+        {
+          "action": "assert_url",
+          "locator": null,
+          "value": "/api/auth/login",
+          "description": "Should not navigate away on invalid input",
+          "timeout": 10
+        }
+      ]
+    },
+    {
+      "name": "Security - injection probe on LoginForm",
+      "category": "security",
+      "source": "code:LoginForm",
+      "tags": [
+        "code",
+        "security",
+        "sast",
+        "dast"
+      ],
+      "steps": [
+        {
+          "action": "navigate",
+          "locator": null,
+          "value": "/",
+          "description": null,
+          "timeout": 10
+        },
+        {
+          "action": "fill",
+          "locator": {
+            "strategy": "name",
+            "value": "email"
+          },
+          "value": "' OR '1'='1",
+          "description": "Security: injection probe in 'email'",
+          "timeout": 10
+        },
+        {
+          "action": "fill",
+          "locator": {
+            "strategy": "name",
+            "value": "password"
+          },
+          "value": "' OR '1'='1",
+          "description": "Security: injection probe in 'password'",
+          "timeout": 10
+        },
+        {
+          "action": "click",
+          "locator": {
+            "strategy": "css",
+            "value": "button[type=submit]"
+          },
+          "value": null,
+          "description": null,
+          "timeout": 10
+        },
+        {
+          "action": "security_scan",
+          "locator": null,
+          "value": "/api/auth/login",
+          "description": "Hand off endpoint to OWASP ZAP for DAST scan",
+          "timeout": 10
+        }
+      ]
+    }
+  ],
+  "metadata": {}
+}

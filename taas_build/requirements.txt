@@ -1,0 +1,8 @@
+pydantic>=2.0
+fastapi>=0.110
+uvicorn>=0.27
+python-multipart>=0.0.9
+openpyxl>=3.1
+# For running generated Selenium tests (optional):
+# pytest>=8.0
+# selenium>=4.0
